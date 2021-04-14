@@ -1,7 +1,8 @@
 const express =require('express');
 const app= express();
 const port =8000;
-
+// require router
+app.use('/',require('./routes/index'))
 
 // creating server
 app.listen(port, function(err){
