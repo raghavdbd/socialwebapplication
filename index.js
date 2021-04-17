@@ -3,13 +3,14 @@ const cookieparser=require('cookie-parser');
 
 const app= express();
 const port =8000;
-const expressEjsLayouts = require('express-ejs-layouts');
+
 const expresslayouts= require('express-ejs-layouts');
 const db=require('./config/mongoose')
 // using middleware
 app.use(express.urlencoded());
-app.use(cookieparser);
-app.use(express.static('./assets'))
+app.use(cookieparser());
+app.use(express.static('./assets'));
+app.use(expresslayouts)
 // app.use(expressLayouts);
 app.set('layout extractStyle',true)
 app.set('layout extractScript',true)
