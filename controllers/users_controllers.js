@@ -47,3 +47,25 @@ module.exports.create=function(req,res){
 
 
 }
+module.exports.createsession = function(req,res){
+// find user
+User.findOne({email:req.body.email},function(err,user){
+    if(err){
+        console.log('error in finding user');
+    }
+    if(user){
+        if(user.password !=req.body.password){
+            return res.redirect('back');
+
+
+        }
+        res.cookie('user_id',user.id);
+        return res.redirect('/users/profile')
+    }else{
+        return res.redirect('back')
+    }
+
+})
+// if user find check password
+// if user not find
+}

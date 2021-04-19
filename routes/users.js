@@ -8,5 +8,5 @@ router.get('/signup',usersController.signup)
 router.get('/signin',usersController.signin)
 // create a router for creating a user
 router.post('/create',usersController.create);
-
+router.post('/create-session',usersController.createsession);
 module.exports=router
