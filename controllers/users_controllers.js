@@ -1,10 +1,29 @@
 const User=require('../models/user')
 module.exports.profile = function(req, res){
-    return res.render('user_profile', {
-        title: 'User Profile'
-    })
+
+    // we check profile only open wehen user is sign in
+    if(req.cookies.user_id){
+        // now find the user
+        User.findById(req.cookies.user_id,function(err,user){
+            
+            if(user){
+
+                return res.render('user_profile',{
+                    title:"User Profile",
+                    user:user
+            
+           
+            })
+        }
+        return res.redirect('/users/signin')
+        
+    });
+
+}else{
+    return res.redirect('users/signin');
 }
-// render signup pagenpm start
+}
+// render signup page
 module.exports.signup=function(req,res){
     res.render('user_sign_up',{
         title:"codial|signup"
@@ -33,7 +52,7 @@ module.exports.create=function(req,res){
         if(!user){
             User.create(req.body,function(err,user){
                 if(err){
-                    console.log('error in finding user')
+                    console.log('error in creating user')
                 }
                 return res.redirect('/users/signin')
             }
