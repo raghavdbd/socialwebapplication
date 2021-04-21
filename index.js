@@ -11,6 +11,10 @@ const session=require('express-session');
 const passport=require('passport')
 // require passport stratiggy
 const passportLocal=require('./config/passport-local-strategies');
+// to store session cookie in database we require connect mongo
+const MongoStore = require('connect-mongodb-session')(session);
+
+
 
 // using middleware for storing data ind req.body
 app.use(express.urlencoded());
@@ -39,6 +43,14 @@ app.use(session({
         // it tell in how much time our session expire
         maxAge: (1000 * 60 * 100)
     },
+    store:new MongoStore({
+        mongooseConnection:db,
+        autoRemove:'disabled'
+    },
+    function(err){
+        console.log(err || 'connect mongo-dn setup')
+    }
+    )
 
 
 
