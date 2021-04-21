@@ -47,3 +47,6 @@ module.exports.create=function(req,res){
 
 
 }
+module.exports.createsession=function(req,res){
+    return res.redirect('/');
+}
