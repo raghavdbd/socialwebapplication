@@ -3,7 +3,7 @@ const express=require('express');
 const router = express.Router();
 const passport=require('passport')
 const usersController=require('../controllers/users_controllers');
-router.get('/profile',usersController.profile);
+router.get('/profile',passport.checkAuthentication,usersController.profile);
 // create a router for creating a signup
 router.get('/signup',usersController.signup)
 // create a router for creating a signin

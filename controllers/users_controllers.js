@@ -6,6 +6,10 @@ module.exports.profile = function(req, res){
 }
 // render signup pagenpm start
 module.exports.signup=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+    
     res.render('user_sign_up',{
         title:"codial|signup"
     }
@@ -13,6 +17,9 @@ module.exports.signup=function(req,res){
 }
 // render signin page
 module.exports.signin=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     res.render('user_sign_in',{
         title:"codial|signin"
     }
