@@ -13,7 +13,18 @@ const passport=require('passport')
 const passportLocal=require('./config/passport-local-strategies');
 // to store session cookie in database we require connect mongo
 const MongoStore = require('connect-mongodb-session')(session);
+// initiliazing sass middleware
+const sassMiddleware=require('node-sass-middleware');
 
+// use sass to convert sass file to css file
+app.use(sassMiddleware({
+    src:'./assets/scss',
+    dest:'./assets/css',
+    debug:true,
+    outputStyle:'extended',
+    prefix:'/css'
+
+}))
 
 
 // using middleware for storing data ind req.body
