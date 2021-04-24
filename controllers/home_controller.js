@@ -1,6 +1,7 @@
 const Post=require('../models/posts');
 const User=require('../models/user');
-module.exports.home=function(req,res){
+// we using async await method to custmize our code
+module.exports.home = async  function(req,res){
     // console.log(req.cookie);
     // res.cookie(('user_id',25));
     // Post.find({},function(err,posts){
@@ -13,7 +14,8 @@ module.exports.home=function(req,res){
     // })
     // to populaate user we to do this
     // in exec we write call back function 
-    Post.find({})
+try{
+    let posts= await Post.find({})
     .populate('user')
     .populate({
         path:'comments',
@@ -21,18 +23,21 @@ module.exports.home=function(req,res){
             path:'user'
         }
     })
-    .exec(function(err,posts){
-        User.find({},function(err,user){
-            return  res.render('home',{
-                title:'codial|home',
-                posts:posts,
-                all_users:user
+   
+     let users=await  User.find({});
+     return  res.render('home',{
+        title:'codial|home',
+        posts:posts,
+        all_user:users
+          
 
-        })
+        });
 
+
+}catch(err){
+    console.log('Error',err);
+}
+   
        
 
-    })
-
-    })
-};
+    };
