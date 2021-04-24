@@ -1,6 +1,6 @@
 const Posts=require('../models/posts')
 // craeting controller for posts
-const Commnets=require('../models/comments')
+const Comment=require('../models/comments')
 module.exports.create=function(req,res){
     // we create a post
     Posts.create({
@@ -26,7 +26,9 @@ module.exports.destroy=function(req,res){
             // remove post
             post.remove();
             // delete all comments with associated post
-            Commnets.deleteMany({post:req.params .id},function(err){
+            Comment.deleteMany({post:req.params.id},function(err){
+
+                console.log(err,'error');
                 return res.redirect('back');
             })
         }else{
