@@ -1,4 +1,5 @@
-const Post=require('../models/posts')
+const Post=require('../models/posts');
+
 module.exports.home=function(req,res){
     // console.log(req.cookie);
     // res.cookie(('user_id',25));
@@ -21,6 +22,7 @@ module.exports.home=function(req,res){
         }
     })
     .exec(function(err,posts){
+
         return  res.render('home',{
             title:'codial|home',
             posts:posts
