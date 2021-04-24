@@ -71,10 +71,12 @@ module.exports.create=function(req,res){
 
 }
 module.exports.createsession=function(req,res){
+    req.flash('success', 'log in Successfully')
     return res.redirect('/');
 }
 // create controller for sign-out
 module.exports.destroySession=function(req,res){
     req.logout();
+    req.flash('success','log out succesfully')
     return res.redirect('/')
 }

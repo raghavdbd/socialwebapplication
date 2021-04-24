@@ -14,7 +14,10 @@ const passportLocal=require('./config/passport-local-strategies');
 // to store session cookie in database we require connect mongo
 const MongoStore = require('connect-mongodb-session')(session);
 // initiliazing sass middleware
-const sassMiddleware=require('node-sass-middleware');
+const sassMiddleware= require('node-sass-middleware');
+// include library to display flah messages
+const flash=require('connect-flash')
+const customMware=require('./config/middleware');
 
 // use sass to convert sass file to css file
 app.use(sassMiddleware({
@@ -70,6 +73,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
+app.use(flash());
+app.use(customMware.setflash)
+
 app.use('/',require('./routes'))
 
 
