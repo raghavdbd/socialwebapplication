@@ -11,9 +11,11 @@ module.exports.create= async function(req,res){
         } 
         
         )
+        req.flash('success','post created')
         return res.redirect('back');
 
     }catch(err){
+        req.flash('error','error in post creation')
         console.log('error',err);
     }
     // we create a post
