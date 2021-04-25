@@ -10,14 +10,44 @@ module.exports.profile = function(req, res){
     
     });
 }
-module.exports.update=function(req,res){
-    if(req.user.id == req.params.id){
-    User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
-        return res.redirect('back')
-    })
-}else{
-    return res.status(401).send('Unauthorized');
+module.exports.update= async function(req,res){
+//     if(req.user.id == req.params.id){
+//     User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+//         return res.redirect('back')
+//     })
+// }else{
+//     return res.status(401).send('Unauthorized');
+// }
+if(req.user.id == req.params.id){
+try{
+let user= await User.findByIdAndUpdate(req.params.id);
+// we can not direct acesses all user field from req.body as it contains some multi part body
+User.uploadedAvatar(req,res,function(err){
+    if(err){
+        console.log('****multer error',err);
+    }
+    user.name=req.body.name;
+    user.email=req.body.email;
+    if(req.file){
+        // this is saving the path of the uploaded file into the avatar field in th user
+        user.avatar=User.avatarPath+'/'+req.file.filename
+    }
+user.save;
+return res.redirect('/')});
 }
+
+
+catch(err){
+    req.flash('error',err);
+    return res.redirect('back');
+    
+
+
+}
+
+
+}
+
 
 }
 // render signup pagenpm start
