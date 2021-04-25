@@ -3,7 +3,7 @@ const Posts=require('../models/posts')
 const Comment=require('../models/comments')
 module.exports.create= async function(req,res){
     try{
-        await Posts.create({
+     let post=   await Posts.create({
             // storing content
             content:req.body.content,
             // storing user who created post
@@ -11,6 +11,14 @@ module.exports.create= async function(req,res){
         } 
         
         )
+        if(req.xhr){
+            return  res.status(200).json({
+                data:{
+                    post:post
+                },
+                message:"post created"
+            })
+        }
         req.flash('success','post created')
         return res.redirect('back');
 
@@ -26,7 +34,7 @@ module.exports.destroy= async function(req,res){
     try{
         let post= await Posts.findById(req.params.id)
         // .id converting object id into String
-        if(post.user==req.user.id){
+        if(post.user == req.user.id){
             // remove post
             post.remove();
             // delete all comments with associated post
