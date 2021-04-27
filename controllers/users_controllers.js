@@ -1,4 +1,5 @@
 const User=require('../models/user');
+const path = require('path');
 
 module.exports.profile = function(req, res){
     // we have to find user to diaplay it and then pass it on
@@ -20,7 +21,7 @@ module.exports.update= async function(req,res){
 // }
 if(req.user.id == req.params.id){
 try{
-let user= await User.findByIdAndUpdate(req.params.id);
+let user= await User.findById(req.params.id);
 // we can not direct acesses all user field from req.body as it contains some multi part body
 User.uploadedAvatar(req,res,function(err){
     if(err){
@@ -32,9 +33,12 @@ User.uploadedAvatar(req,res,function(err){
         // this is saving the path of the uploaded file into the avatar field in th user
         user.avatar=User.avatarPath+'/'+req.file.filename
     }
-user.save;
-return res.redirect('/')});
+user.save();
+
 }
+);
+}
+
 
 
 catch(err){
@@ -46,6 +50,9 @@ catch(err){
 }
 
 
+}else{
+    req.flash('error',err);
+    return res.status(401).send('Unauthorized')
 }
 
 

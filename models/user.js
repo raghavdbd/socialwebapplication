@@ -20,7 +20,6 @@ const UserSchema=new mongoose.Schema({
         },
         avatar:{
             type:String,
-            // now we store path to file and file name  for file name we use epoke time which is in milli second
             
         }
            
@@ -29,6 +28,8 @@ const UserSchema=new mongoose.Schema({
 },{
     timestamps:true
 });
+            // now we store path to file and file name  for file name we use epoke time which is in milli second
+
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, path.join(__dirname,'..',Avatar_path))
@@ -40,7 +41,7 @@ let storage = multer.diskStorage({
   })
 //   .single tell only one file will upload 
    UserSchema.statics.uploadedAvatar=multer({storage: storage}).single('avatar');
-   UserSchema.statics.avatarpath=Avatar_path
+   UserSchema.statics.avatarPath=Avatar_path;
  
 const User=mongoose.model('User',UserSchema);
 module.exports=User;
