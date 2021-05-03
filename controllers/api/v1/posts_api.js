@@ -23,7 +23,7 @@ module.exports.destroy= async function(req,res){
     try{
         let post= await Post.findById(req.params.id)
         // .id converting object id into String
-        // if(post.user == req.user.id){
+         if(post.user == req.user.id){
             // remove post
             post.remove();
             // delete all comments with associated post
@@ -38,9 +38,12 @@ module.exports.destroy= async function(req,res){
            return res.json(200,{
                message:"post and associated messagw deleted"
            })
-        // }else{
-        //     return res.redirect('back');
-        // }
+        }else{
+            return res.json(401),{
+                MESSAGE:"YOU CANNOT DELETE THIS POST"
+            }
+        }
+        
     }catch(err){
         console.log('****',err)
        return res.json(500,{
