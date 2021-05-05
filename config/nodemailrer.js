@@ -12,8 +12,8 @@ const path=require('path');
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: 'raghavgoyal', // generated ethereal user
-      pass: testAccount.pass, // generated ethereal password
+      user: 'raghavgoyaldbd478', // generated ethereal user
+      pass: 'Raghav@905', // generated ethereal password
     },
   });
 // this define  html file we send with email
