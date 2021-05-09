@@ -21,8 +21,13 @@ try{
         path:'comments',
         populate:{
             path:'user'
+        },
+    // this population is for comments
+        populate:{
+            path:'likes'
         }
-    })
+        // this population is for posts
+    }).populate('likes');
    
      let users=await  User.find({});
      return  res.render('home',{

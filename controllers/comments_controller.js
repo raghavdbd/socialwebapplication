@@ -1,7 +1,7 @@
 const Comment =require('../models/comments');
 const Post = require('../models/posts');
 const commentsMailer = require('../mailer/comment_mailer');
-
+const Like=require('../models/like')
 // craeting controller for posts
 module.exports.create= async function(req,res){
     // first we have to find post 
@@ -56,9 +56,10 @@ module.exports.create= async function(req,res){
                 comment.remove();
     
               let post=  Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}})
-              return res.redirect('back');
+              await Like.deleteMany({likeable:post,onModel:'Post'});
+            
 // send the comment id which was deleted back to the views
-if (req.xhr){
+             if (req.xhr){
     return res.status(200).json({
         data: {
             comment_id: req.params.id

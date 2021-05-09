@@ -20,15 +20,15 @@ const path=require('path');
 
   let renderTemplate=(data,relativePath) =>{
       let mailHTML;
-      ejs.renderTemplate(
-          path.join(__dirname,'../views/mailer'),
+      ejs.renderFile(
+          path.join(__dirname,'../views/mailer',relativePath),
         //   here data defines what is fulfilled in 
-          data,function(err,templets){
+          data,function(err,template){
               if(err){
-                  console.log('error in rendering template');
+                  console.log('error in rendering template',err);
                   return;
               }
-              mailHTML=templets;
+              mailHTML=template;
           }
 
 

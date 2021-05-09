@@ -1,6 +1,7 @@
 const Posts=require('../models/posts')
 // craeting controller for posts
 const Comment=require('../models/comments')
+const Like=require('../models/like')
 module.exports.create= async function(req,res){
     try{
      let post=   await Posts.create({
@@ -35,6 +36,9 @@ module.exports.destroy= async function(req,res){
         let post= await Posts.findById(req.params.id)
         // .id converting object id into String
         if(post.user == req.user.id){
+
+            await Like.deleteMany({likeable:post,onModel:'Post'});
+            await Like.deleteMany({_id: {$in:post.comments}});
             // remove post
             post.remove();
             // delete all comments with associated post
