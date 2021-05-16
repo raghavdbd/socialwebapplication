@@ -1,4 +1,4 @@
-const Posts=require('../models/posts')
+ const Posts=require('../models/posts')
 // craeting controller for posts
 const Comment=require('../models/comments')
 const Like=require('../models/like')
